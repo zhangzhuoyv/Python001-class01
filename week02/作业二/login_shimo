@@ -1,0 +1,48 @@
+from selenium import webdriver
+import time
+
+class login():
+    def __init__(self):
+        # 登陆地址
+        self.login_url = 'https://shimo.im/login?from=home'
+        # 账号密码， 调试完，改写，安全原因
+        self.phone = '18988967300'
+        self.password = '195917aa'
+    
+    # 创建一个 运行方法：
+
+    def run(self):
+        browser = webdriver.Chrome()
+        browser.get(self.login_url)
+        time.sleep(1)
+        # 呼起浏览器，然后填入网址，暂停一秒
+
+        browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div/div/div/div[2]/div/div/div[1]/div[1]/div/input').send_keys(self.phone)
+        time.sleep(2)
+        #通过 xpath 定位 账号输入框，填入手机号
+
+        browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div/div/div/div[2]/div/div/div[1]/div[2]/div/input').send_keys(self.password)
+        time.sleep(2)
+        #通过 xpath 定位 密码输入框 ，填入密码
+
+        browser.find_element_by_xpath('//*[@id="root"]/div/div[2]/div/div/div/div[2]/div/div/div[1]/button').click()
+        time.sleep(2)
+        #通过 xpath 定位 登陆按钮， 点击
+
+        cookies = browser.get_cookies()
+        print(cookies)
+        time.sleep(5)
+        # 登陆后，获取 cookies ，然后打印确认是否正常获取,之后休息5秒
+
+        browser.close()
+
+# 函数引用类的方法      
+def main():
+    im = login()
+    im.run()   
+
+# 固定用法，先理解为 引用入口，后续再问来时
+if __name__ == '__main__':
+    main()
+
+
