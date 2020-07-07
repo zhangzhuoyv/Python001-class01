@@ -6,8 +6,8 @@ class login():
         # 登陆地址
         self.login_url = 'https://shimo.im/login?from=home'
         # 账号密码， 调试完，改写，安全原因
-        self.phone = '18988967300'
-        self.password = '195917aa'
+        self.phone = '1898XXX300'
+        self.password = '19XXXXX'
     
     # 创建一个 运行方法：
 
