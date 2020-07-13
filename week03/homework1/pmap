@@ -1,0 +1,57 @@
+import socket
+from queue import Queue
+import multiprocessing as mp
+
+# 提前ping 了以下豆瓣的 IP 为 154.8.131.165'
+# 实现扫描端口的函数，也充当消费者
+
+ip = '154.8.131.165'
+
+def scan(port):
+    s = socket.socket()
+    s.settimeout(0.1)
+    #引入 套字节功能，超时为0.1秒  不然扫描端口太多，等待时间太长
+
+    if s.connect_ex(('ip',port)) == 0:
+        print(port,'open')
+    else:
+        print(port,'close')
+        # socket.connect_ex 方法，如果返回值为0，则链接成功，否则会有报错信息
+        # 端口开放 输出 open，关闭 则输出 close
+
+    s.close() # 套字节线程结束  
+
+# 生产者函数 用于分批 把 q 丢到 produce(q) ,获得 port, 再把 port 丢给 scan(port), 输出端口情况
+def produce(q):
+    while not q.empty():
+        # 如果队列不为空，这里需要用q.empty()，因为要运行函数，通过返回值才能判断是否为空
+        port = q.get()
+        # 从队列里获取端口号
+        scan(port)
+        # 扫描端口号，输出扫描结果
+        q.task_done()
+        #通知队列线程结束
+
+
+
+
+
+if __name__ == "__main__":
+    q = mp.JoinableQueue()
+    #可以 join()的队列
+    map(q.put,range(1,1025))
+    # q.put 就是放队列放数据 
+    # 把端口1-1024 装在一个生成器中，不能用range 列表太大
+    # 通过 map 函数 ，xrange(1,1024) 逐一生成端口，通过 q.put放入队列
+    
+
+    jobs = [mp.Process(target=produce,args=(q,)) for i in range(4)]
+    # 建立线程任务 往produce() 里丢入 队列 q 
+    # for i in xrange(4) 便于观察 每次发起4个线程,丢给列表jobs
+
+    map(lambda x:x.start(),jobs)
+    # 列表jobs 的线程任务，批量开始
+
+
+
+
