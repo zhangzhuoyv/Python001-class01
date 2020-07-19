@@ -1,0 +1,20 @@
+1. SELECT * FROM data; # 从表格中 data中获取所有数据
+
+2. SELECT * FROM data LIMIT 10;   # 从表格中 data中获取前10条数据
+
+3. SELECT id FROM data;  //id 是 data 表的特定一列   # 从data 中 获取 名为 id 的列 的数据
+
+4. SELECT COUNT(id) FROM data;   # 计数 列 id 有多少行
+
+5. SELECT * FROM data WHERE id<1000 AND age>30;  获取  id<1000 AND age>30 的数据
+
+6. SELECT id,COUNT(DISTINCT order_id) FROM table1 GROUP BY id;  # 从 table1 中找出所有 id 和 不同的order_id的计数，并用 id 进行聚合
+
+7. SELECT * FROM table1 t1 INNER JOIN table2 t2 ON t1.id = t2.id;  # 找到 表table1里 的字表t1 和 table2 中的子表 t2，各自 列 'id' 相同 的 内容
+
+8. SELECT * FROM table1 UNION SELECT * FROM table2; # 合并 从table1 和 table2 里的搜索到的内容进行合并
+
+9. DELETE FROM table1 WHERE id=10;  # 删除 table1 里， id 列 值为 10 的 数据
+
+10. ALTER TABLE table1 DROP COLUMN column_name;  删除 table1 中 ，铭文 column_name 的列
+
