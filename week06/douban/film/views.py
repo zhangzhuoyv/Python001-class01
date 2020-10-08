@@ -96,12 +96,6 @@ def week06(request):
 
 def search(request):
 
-
-
-
-
-
-
     q = request.GET.get('q')
 
     shorts = T1.objects.filter(short__contains=q)
